@@ -50,7 +50,6 @@ class WideSearch(Resource):
             i += 1
             response = request_pages.get_widesearch(route + '&page=' + str(i))
             parsed = parsers.widesearch_parser.parse(response.content)
-            # for x in parsed[0]:
-            #     result[x].extend(parsed[0][x])
+            result.extend(parsed[0])
 
-        return 'Done', 200
+        return result, 200
