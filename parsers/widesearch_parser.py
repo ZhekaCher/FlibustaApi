@@ -23,7 +23,7 @@ def parse(content):
         try:
             element['rating'] = div.findChild("img").get("title")
         except AttributeError:
-            element['rating'] = 'нет данных'
+            pass
 
         try:
             genres_p = div.findChild("p")
@@ -34,11 +34,10 @@ def parse(content):
                 genre_name = genre.text
                 genre_code = genre['name']
                 genres.append({'genre_id': genre_id, 'genre_title': genre_name, 'genre_code': genre_code})
-            if not genres:
-                genres = None
-            element['genres'] = genres
+            if genres:
+                element['genres'] = genres
         except AttributeError:
-            element['genres'] = None
+            pass
 
         try:
             translators_a = []
@@ -52,11 +51,10 @@ def parse(content):
                 translator_id = translator["href"].split("/")[2]
                 translator_fullname = translator.text
                 translators.append({'translator_id': translator_id, 'translator_fullname': translator_fullname})
-            if not translators:
-                translators = None
-            element['translators'] = translators
+            if translators:
+                element['translators'] = translators
         except AttributeError:
-            element['translators'] = None
+            pass
 
         try:
             authors_a = []
@@ -71,11 +69,10 @@ def parse(content):
                 author_id = author["href"].split("/")[2]
                 author_fullname = author.text
                 authors.append({'author_id': author_id, 'author_fullname': author_fullname})
-            if not authors:
-                authors = None
-            element['authors'] = authors
+            if authors:
+                element['authors'] = authors
         except AttributeError:
-            element['authors'] = None
+            pass
 
         try:
             series_a = list(filter(lambda x: "/s/" in x["href"], all_a))
@@ -84,15 +81,14 @@ def parse(content):
                 s_id = s["href"].split("/")[2]
                 s_name = s.text
                 series.append({'series_id': s_id, 'series_name': s_name})
-            if not series:
-                series = None
-            element['series'] = series
+            if series:
+                element['series'] = series
         except AttributeError:
-            element['series'] = None
+            pass
 
         try:
             element['size'] = div.findChild("span", {'style': 'size'}).text
         except AttributeError:
-            element['size'] = None
+            pass
         result.append(element)
     return result, next_page
