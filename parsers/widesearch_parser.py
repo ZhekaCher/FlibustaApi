@@ -37,7 +37,6 @@ def parse(content):
             if not genres:
                 genres = None
             element['genres'] = genres
-            print(div)
         except AttributeError:
             element['genres'] = None
 
