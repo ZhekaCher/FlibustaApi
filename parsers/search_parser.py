@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 
 ul_titles_dict = {'серии': 'series',
-                  'писатели': 'writers',
+                  'писатели': 'authors',
                   'книги': 'books'}
 
 
@@ -26,7 +26,7 @@ def parse(content):
     i = 0
     for element in elements:
         for child_element in element.findChildren("li"):
-            json[ul_titles[i]].append({'element': child_element.text,
-                                       'link': child_element.findChild('a').get('href')})
+            json[ul_titles[i]].append({'name': child_element.text,
+                                       'id': int(child_element.findChild('a').get('href').split('/')[2])})
         i = i + 1
     return json, next_page
