@@ -9,7 +9,10 @@ def parse(content):
     except AttributeError:
         next_page = None
 
-    main_divs = soup.find("form", {'name': 'bk'}).findChildren("div")
+    try:
+        main_divs = soup.find("form", {'name': 'bk'}).findChildren("div")
+    except AttributeError:
+        return None, next_page
     for div in main_divs:
         element = {}
         all_a = div.findChildren("a")
@@ -52,7 +55,7 @@ def parse(content):
                 translators.append({'translator_id': translator_id, 'translator_name': translator_name})
             if not translators:
                 translators = None
-                element['translators'] = translators
+            element['translators'] = translators
         except AttributeError:
             element['translators'] = None
 

@@ -36,6 +36,9 @@ class WideSearch(Resource):
         author_lname = request.args.get('author_lname')
         book_title = request.args.get('book_title')
         genres = request.args.get('genres')
+        patronymic = request.args.get('patronymic')
+        language = request.args.get('language')
+        sort = request.args.get('sort')
         route = '/makebooklist?ab=ab1&sort=st1'
         if book_title is not None:
             route += '&t=' + book_title
@@ -45,6 +48,12 @@ class WideSearch(Resource):
             route += '&fn=' + author_fname
         if genres is not None:
             route += '&g=' + genres
+        if patronymic is not None:
+            route += '&mn=' + patronymic
+        if sort is not None:
+            route += '&sort=' + sort
+        if language is not None:
+            route += '&lng=' + language
         response = request_pages.get_widesearch(route)
         parsed = parsers.widesearch_parser.parse(response.content)
         result = parsed[0]
