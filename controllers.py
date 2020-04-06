@@ -2,6 +2,7 @@ from flask_restful import Resource, request
 import request_pages
 import parsers.search_parser
 import parsers.book_links_parser
+import parsers.widesearch_parser
 
 
 class Search(Resource):
@@ -27,3 +28,27 @@ class Downloads(Resource):
         parsed = parsers.book_links_parser.parse(response.content)
         result = parsed
         return result, 200
+
+
+class WideSearch(Resource):
+    def get(self):
+        author_fname = request.args.get('author_fname')
+        author_lname = request.args.get('author_lname')
+        book_title = request.args.get('book_title')
+        route = '/makebooklist?ab=ab1&sort=st1'
+        if book_title is not None:
+            route += '&t='+book_title
+        if author_lname is not None:
+            route += '&ln='+author_lname
+        if author_fname is not None:
+            route += '&fn='+author_fname
+        response = request_pages.get_widesearch(route)
+        parsed = parsers.widesearch_parser.parse(response.content)
+        result = parsed[0]
+        while parsed[1] is not None:
+            response = request_pages.get_search(parsed[1])
+            parsed = parsers.search_parser.parse(response.content)
+            for x in parsed[0]:
+                result[x].extend(parsed[0][x])
+        return 'Done', 200
+
