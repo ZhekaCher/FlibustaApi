@@ -51,8 +51,8 @@ def parse(content):
             translators = []
             for translator in translators_a:
                 translator_id = translator["href"].split("/")[2]
-                translator_name = translator.text
-                translators.append({'translator_id': translator_id, 'translator_name': translator_name})
+                translator_fullname = translator.text
+                translators.append({'translator_id': translator_id, 'translator_fullname': translator_fullname})
             if not translators:
                 translators = None
             element['translators'] = translators
@@ -70,8 +70,8 @@ def parse(content):
             authors = []
             for author in authors_a:
                 author_id = author["href"].split("/")[2]
-                author_name = author.text
-                authors.append({'author_id': author_id, 'author_name': author_name})
+                author_fullname = author.text
+                authors.append({'author_id': author_id, 'author_fullname': author_fullname})
             if not authors:
                 authors = None
             element['authors'] = authors
