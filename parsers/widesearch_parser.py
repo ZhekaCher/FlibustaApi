@@ -29,7 +29,8 @@ def parse(content):
             for genre in genres_a:
                 genre_id = genre["href"].split("/")[2]
                 genre_name = genre.text
-                genres.append({'genre_id': genre_id, 'genre_title': genre_name})
+                genre_code = genre['name']
+                genres.append({'genre_id': genre_id, 'genre_title': genre_name, 'genre_code': genre_code})
             if not genres:
                 genres = None
             element['genres'] = genres
