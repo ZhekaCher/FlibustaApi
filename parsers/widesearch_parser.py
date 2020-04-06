@@ -6,7 +6,7 @@ def parse(content):
     result = []
     try:
         next_page = soup.find("li", class_="pager-next").find_next("a").get("href")
-    except:
+    except AttributeError:
         next_page = None
 
     main_divs = soup.find("form", {'name': 'bk'}).findChildren("div")
