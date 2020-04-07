@@ -64,4 +64,4 @@ class WideSearch(Resource):
             parsed = parsers.widesearch_parser.parse(response.content)
             result.extend(parsed[0])
 
-        return result, 200
+        return {"books":result}, 200

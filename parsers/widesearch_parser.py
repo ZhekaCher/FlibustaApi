@@ -30,7 +30,7 @@ def parse(content):
             genres_a = genres_p.findChildren("a")
             genres = []
             for genre in genres_a:
-                genre_id = genre["href"].split("/")[2]
+                genre_id = int(genre["href"].split("/")[2])
                 genre_name = genre.text
                 genre_code = genre['name']
                 genres.append({'genre_id': genre_id, 'genre_title': genre_name, 'genre_code': genre_code})
@@ -48,7 +48,7 @@ def parse(content):
                     translators_a.append(a)
             translators = []
             for translator in translators_a:
-                translator_id = translator["href"].split("/")[2]
+                translator_id = int(translator["href"].split("/")[2])
                 translator_fullname = translator.text
                 translators.append({'translator_id': translator_id, 'translator_fullname': translator_fullname})
             if translators:
@@ -66,7 +66,7 @@ def parse(content):
                     authors_a.append(a)
             authors = []
             for author in authors_a:
-                author_id = author["href"].split("/")[2]
+                author_id = int(author["href"].split("/")[2])
                 author_fullname = author.text
                 authors.append({'author_id': author_id, 'author_fullname': author_fullname})
             if authors:
@@ -78,7 +78,7 @@ def parse(content):
             series_a = list(filter(lambda x: "/s/" in x["href"], all_a))
             series = []
             for s in series_a:
-                s_id = s["href"].split("/")[2]
+                s_id = int(s["href"].split("/")[2])
                 s_name = s.text
                 series.append({'series_id': s_id, 'series_name': s_name})
             if series:
